@@ -3,6 +3,9 @@ package com.reactive.sec01;
 import com.reactive.courseutil.Util;
 import reactor.core.publisher.Mono;
 
+import java.util.concurrent.Callable;
+import java.util.function.Supplier;
+
 /**
  * Created by Rizki Abdillah Azmi on 17-Jun-23
  */
@@ -12,10 +15,17 @@ public class Lec05MonoFromSupplier {
         // use just only when you have dara already
         // Mono<String> mono = Mono.just(getName());
 
-        Mono<String> mono = Mono.fromSupplier(Lec05MonoFromSupplier::getName);
+        Supplier<String> stringSupplier = () -> getName();
+        Mono<String> mono = Mono.fromSupplier(stringSupplier);
         mono.subscribe(
                 Util.onNext()
         );
+
+        Callable<String> stringCallable = () -> getName();
+        Mono.fromCallable(stringCallable)
+                .subscribe(
+                        Util.onNext()
+                );
     }
 
     private static String getName(){
