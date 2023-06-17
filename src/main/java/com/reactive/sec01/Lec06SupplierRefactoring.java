@@ -2,6 +2,7 @@ package com.reactive.sec01;
 
 import com.reactive.courseutil.Util;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 /**
  * Created by Rizki Abdillah Azmi on 17-Jun-23
@@ -12,9 +13,11 @@ public class Lec06SupplierRefactoring {
 
         getName();
         getName()
+                .subscribeOn(Schedulers.boundedElastic())
                 .subscribe(Util.onNext());
         getName();
 
+        Util.sleepSeconds(4);
     }
 
     private static Mono<String> getName(){
